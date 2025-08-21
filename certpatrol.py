@@ -1073,6 +1073,12 @@ def process_entries_streaming(
     """
     Process CT log entries in streaming fashion to optimize memory usage.
     Phase 2: Added memory monitoring and streaming processing.
+    
+    Note: When match_scope == "etld1", the pattern is matched against the registrable
+    base domain (eTLD+1), not the full domain. For example:
+    - Full domain: "tom-tochito.workers.dev" 
+    - Registrable domain: "workers.dev"
+    - Pattern should match "workers.dev", not ".*\\.workers\\.dev$"
     """
     for i, entry in enumerate(entries):
         absolute_idx = start_idx + i
@@ -1343,7 +1349,7 @@ def main() -> int:
     parser.add_argument(
         "--etld1", "-e",
         action="store_true",
-        help="Match against registrable base domain instead of full domain"
+        help="Match against registrable base domain instead of full domain (e.g., 'workers.dev' not 'example.workers.dev')"
     )
     parser.add_argument(
         "--debug-all", "-d",
