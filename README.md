@@ -4,9 +4,9 @@
   <img width="609" height="250" alt="Torito Logo" src="https://torito.io/toritocertpatrol.png">
 </p>
 
-A fast, lightweight *Certificate Transparency* (CT) log tailer for your terminal. Filter domains with regex, run locally for privacy, and monitor in real time—no third-party servers, no tracking.
+A fast, lightweight **Certificate Transparency** (CT) log tailer for your terminal. Filter domains with regex, run locally for privacy, and monitor in real time—no third-party servers, no tracking.
 
-A modern, local, privacy-friendly *CertStream* alternative.
+A modern, local, privacy-friendly **CertStream** alternative.
 
 > **Looking for a more advanced CertStream server alternative?**  
 > Check out [Certstream Server Go](https://github.com/d-Rickyy-b/certstream-server-go) by [d-Rickyy-b](https://github.com/d-Rickyy-b) for a robust, production-grade solution.
