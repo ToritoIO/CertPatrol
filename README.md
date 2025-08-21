@@ -1,6 +1,8 @@
 # CertPatrol
 
-![Torito Logo](https://torito.io/toritocertpatrol.png)
+<p align="center">
+  <img width="609" height="250" alt="Torito Logo" src="https://torito.io/toritocertpatrol.png">
+</p>
 
 A lightweight local Certificate Transparency (CT) log tailer that filters domains by regex patterns.
 
