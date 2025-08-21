@@ -1,0 +1,8 @@
+# CertPatrol - Certificate Transparency monitoring tool
+# Core dependencies
+requests>=2.25.0
+cryptography>=3.4.0
+idna>=3.0
+
+# Optional but recommended for --etld1 functionality
+tldextract>=3.0.0
