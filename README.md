@@ -4,7 +4,9 @@
   <img width="609" height="250" alt="Torito Logo" src="https://torito.io/toritocertpatrol.png">
 </p>
 
-A lightweight local Certificate Transparency (CT) log tailer that filters domains by regex patterns—intended as a local, privacy-friendly alternative to the now-defunct CertStream.
+A fast, lightweight *Certificate Transparency* (CT) log tailer for your terminal. Filter domains with regex, run locally for privacy, and monitor in real time—no third-party servers, no tracking.
+
+A modern, local, privacy-friendly *CertStream* alternative.
 
 > **Looking for a more advanced CertStream server alternative?**  
 > Check out [Certstream Server Go](https://github.com/d-Rickyy-b/certstream-server-go) by [d-Rickyy-b](https://github.com/d-Rickyy-b) for a robust, production-grade solution.
@@ -38,13 +40,28 @@ python certpatrol.py --pattern "argentina" --etld1
 
 ## Options
 
-- `-p, --pattern PATTERN` - Regex pattern to match (required)
-- `-l, --logs LOGS` - Specific CT logs to monitor
-- `-b, --batch SIZE` - Batch size for fetching (default: 256)
-- `-s, --poll-sleep SECONDS` - Poll interval (default: 3.0)
-- `-v, --verbose` - Show extra info
-- `-e, --etld1` - Match base domains only
-- `-k, --cleanup-checkpoints` - Clean up orphaned files
+### Core Options
+- `-p, --pattern PATTERN` - Regex pattern to match domains against (required)
+- `-l, --logs LOGS` - Specific CT logs to monitor (default: all usable logs)
+- `-v, --verbose` - Verbose output with extra info
+- `-h, --help` - Show help message and exit
+
+### Polling & Performance
+- `-s, --poll-sleep SECONDS` - Initial poll interval (default: 3.0, adaptive)
+- `-mn, --min-poll-sleep` - Minimum poll sleep for adaptive polling (default: 1.0)
+- `-mx, --max-poll-sleep` - Maximum poll sleep for adaptive polling (default: 60.0)
+- `-b, --batch SIZE` - Batch size for fetching entries (default: 256)
+- `-m, --max-memory-mb` - Maximum memory usage in MB (default: 100)
+
+### Filtering & Output
+- `-e, --etld1` - Match against base domains only (requires tldextract)
+- `-q, --quiet-warnings` - Suppress parse warnings (only show matches)
+- `-x, --quiet-parse-errors` - Suppress ASN.1 parsing warnings
+- `-d, --debug-all` - With -v, print detailed per-entry domain listings
+
+### Checkpoint Management
+- `-c, --checkpoint-prefix` - Custom prefix for checkpoint files
+- `-k, --cleanup-checkpoints` - Clean up orphaned checkpoint files and exit
 
 ## Examples
 
@@ -52,18 +69,35 @@ python certpatrol.py --pattern "argentina" --etld1
 # Basic monitoring
 python certpatrol.py --pattern "petsdeli"
 
-# Multiple patterns
+# Multiple patterns with verbose output
 python certpatrol.py --pattern "(petsdeli|pet-deli)" --verbose
 
-# API subdomains
-python certpatrol.py --pattern "api.*\.google\.com$"
+# API subdomains with quiet mode
+python certpatrol.py --pattern "api.*\.google\.com$" --quiet-warnings
 
-# All subdomains of a domain
-python certpatrol.py --pattern ".*\.example\.com$"
+# All subdomains of a domain with custom memory limit
+python certpatrol.py --pattern ".*\.example\.com$" --max-memory-mb 200
 
-# Run multiple instances
-python certpatrol.py --pattern "domain1" &
-python certpatrol.py --pattern "domain2" &
+# Base domain matching only
+python certpatrol.py --pattern "argentina" --etld1
+
+# Run multiple instances with custom prefixes
+python certpatrol.py --pattern "domain1" --checkpoint-prefix "instance1" &
+python certpatrol.py --pattern "domain2" --checkpoint-prefix "instance2" &
+
+# Clean up old checkpoint files
+python certpatrol.py --cleanup-checkpoints
+
+# Performance tuning for high-volume monitoring
+python certpatrol.py --pattern "example" --batch 512 --min-poll-sleep 0.5 --max-poll-sleep 30
+
+# Graceful shutdown examples
+# Send SIGTERM to process for clean shutdown
+kill -TERM $(pgrep -f "certpatrol.py.*example")
+
+# Or use Ctrl+C for immediate graceful shutdown
+python certpatrol.py --pattern "example" --verbose
+# ^C to shutdown gracefully
 ```
 
 ## Requirements
@@ -73,13 +107,24 @@ python certpatrol.py --pattern "domain2" &
 - cryptography
 - idna
 - tldextract (optional, for --etld1)
+- psutil (optional, for memory monitoring)
+
+## Features
+
+- **Real-time monitoring** - Starts from current time (no historical data)
+- **Graceful shutdown** - Handles SIGTERM, SIGINT, and SIGHUP signals properly
+- **Adaptive polling** - Automatically adjusts intervals based on activity and errors
+- **Memory management** - Monitors and limits memory usage to prevent excessive consumption
+- **Connection pooling** - Efficient HTTP session management with retry strategies
+- **Checkpoint persistence** - Automatic state saving with atomic writes
+- **Multi-instance support** - Unique checkpoint files per process with custom prefixes
 
 ## Notes
 
-- Starts monitoring from current time (no historical data)
-- Checkpoints saved in `checkpoints/` folder
-- Each process gets unique checkpoint file
-- Use Ctrl+C to stop
+- Checkpoints saved in `checkpoints/` folder with process-specific names
+- Signal handling ensures clean shutdown and checkpoint saving
+- Sleep periods are responsive to shutdown signals (checks every 0.5s)
+- Use Ctrl+C, `kill`, or system shutdown for graceful termination
 
 ## License
 
