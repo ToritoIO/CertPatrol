@@ -4,7 +4,10 @@
   <img width="609" height="250" alt="Torito Logo" src="https://torito.io/toritocertpatrol.png">
 </p>
 
-A lightweight local Certificate Transparency (CT) log tailer that filters domains by regex patterns.
+A lightweight local Certificate Transparency (CT) log tailer that filters domains by regex patterns—intended as a local, privacy-friendly alternative to the now-defunct CertStream.
+
+> **Looking for a more advanced CertStream server alternative?**  
+> Check out [Certstream Server Go](https://github.com/d-Rickyy-b/certstream-server-go) by [d-Rickyy-b](https://github.com/d-Rickyy-b) for a robust, production-grade solution.
 
 ## What it does
 
