@@ -44,3 +44,4 @@ debug_responses/
 .env
 .env.local
 .venv/
+index.html
