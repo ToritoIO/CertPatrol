@@ -39,10 +39,12 @@ Thumbs.db
 checkpoints/
 debug_responses/
 *.log
+index.html
+improveplan.md
+pyproject.toml
+dist/
 
 # Environment variables
 .env
 .env.local
 .venv/
-index.html
-improveplan.md
