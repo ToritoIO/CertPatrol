@@ -132,5 +132,4 @@ kill -TERM $(pgrep -f "certpatrol.*example")
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) file for details.
-
+MIT License — see [LICENSE](https://github.com/ToritoIO/CertPatrol/blob/main/LICENSE) file for details.
