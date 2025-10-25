@@ -48,3 +48,6 @@ dist/
 .env
 .env.local
 .venv/
+example_queries.sql
+results.db
+certpatrol_db.py
