@@ -42,7 +42,7 @@ certpatrol --pattern "argentina" --etld1
 
 Process orchestration platform for managing multiple [CertPatrol](https://github.com/ToritoIO/CertPatrol) instances with a modern web interface.
 
-![CertPatrol Orchestrator](https://raw.githubusercontent.com/ToritoIO/CertPatrol-Orchestrator/main/manager/web/static/images/dashboard.png)
+[![CertPatrol Orchestrator](https://raw.githubusercontent.com/ToritoIO/CertPatrol-Orchestrator/main/manager/web/static/images/dashboard.png)](https://github.com/ToritoIO/CertPatrol-Orchestrator)
 
 [Try it out!](https://github.com/ToritoIO/CertPatrol-Orchestrator)
 
